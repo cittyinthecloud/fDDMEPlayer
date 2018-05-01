@@ -1,0 +1,4 @@
+appjar
+flask
+python-slugify
+

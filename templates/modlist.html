@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>fDDME Player</title>
+  </head>
+  <body>
+    <ul>
+      {% for slug, mod in mods.items() %}
+      <li>{{mod}}<sub>{{slug}}</sub>  |  <a href="launchmod/{{slug}}">Launch {{mod}}</a></li>
+      {% endfor %}
+    </ul>
+    <a href="addmod">Add Mod</a>
+    <a href="quit">Add Mod</a>
+  </body>
+</html>
