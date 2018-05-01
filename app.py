@@ -77,9 +77,8 @@ def addmodPress(button):
         with ZipFile(modfile) as modzip:
 			with tempfile.TemporaryDirectory() as tmpdirname:
 				modzip.extractall(tmpdirname)
-				modgamedir = Path(findParent("options.rpyc",tmpdirname)
-				moveTree(str(modgamedir),str(modspath/slugify(modname)/'game'))
-                                  
+				moveTree(findParent("options.rpyc",tmpdirname),str(modspath/slugify(modname)/'game'))
+		    
         with shelve.open('mods.db',writeback=True) as mods:
             mods[slugify(modname)]=modname
     addmodgui.clearAllEntries()
