@@ -14,4 +14,4 @@ Feature Requests / Bug Reports
 ------------------------------
 [Create an issue here.](https://github.com/famous1622/fDDMEPlayer/issues)
 
-Bug famous1622#6427 on Discord if it's bad ¯\_(ツ)_/¯
+Bug famous1622#6427 on Discord if it's bad ¯\\_(ツ)_/¯
