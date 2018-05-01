@@ -12,10 +12,11 @@ import os
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
 
-def findParent(name, path):
+def findParent(names, path):
     for root, dirs, files in os.walk(path):
-        if name in files:
-            return root
+        for name in names:
+            if name in files:
+                return root
 
 def forceMergeFlatDir(srcDir, dstDir):
     if not os.path.exists(dstDir):
@@ -50,7 +51,7 @@ def moveTree(src, dst):
                 copyTree(s, d)
             else:
                 forceMergeFlatDir(s, d)
-				
+
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
@@ -68,7 +69,7 @@ def addmod():
     return "<meta http-equiv=\"refresh\" content=\"1; url=http://localhost:5000/\">Please wait..."
 
 
-	
+
 def addmodPress(button):
     modname = addmodgui.getEntry("Mod Name")
     modfile = addmodgui.getEntry("f1")
@@ -77,8 +78,8 @@ def addmodPress(button):
         with ZipFile(modfile) as modzip:
 			with tempfile.TemporaryDirectory() as tmpdirname:
 				modzip.extractall(tmpdirname)
-				moveTree(findParent("options.rpyc",tmpdirname),str(modspath/slugify(modname)/'game'))
-		    
+				moveTree(findParent(("options.rpyc","scripts.rpa"),tmpdirname),str(modspath/slugify(modname)/'game'))
+
         with shelve.open('mods.db',writeback=True) as mods:
             mods[slugify(modname)]=modname
     addmodgui.clearAllEntries()
