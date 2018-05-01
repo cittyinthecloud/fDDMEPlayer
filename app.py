@@ -68,17 +68,15 @@ def addmod():
     addmodgui.go()
     return "<meta http-equiv=\"refresh\" content=\"1; url=http://localhost:5000/\">Please wait..."
 
-
-
 def addmodPress(button):
     modname = addmodgui.getEntry("Mod Name")
     modfile = addmodgui.getEntry("f1")
     if button == "Add":
         shutil.copytree(str(modspath/"vanilla"),str(modspath/slugify(modname)))
         with ZipFile(modfile) as modzip:
-			with tempfile.TemporaryDirectory() as tmpdirname:
-				modzip.extractall(tmpdirname)
-				moveTree(findParent(("options.rpyc","scripts.rpa"),tmpdirname),str(modspath/slugify(modname)/'game'))
+            with tempfile.TemporaryDirectory() as tmpdirname:
+                modzip.extractall(tmpdirname)
+                moveTree(findParent(("options.rpyc","scripts.rpa"),tmpdirname),str(modspath/slugify(modname)/'game'))
 
         with shelve.open('mods.db',writeback=True) as mods:
             mods[slugify(modname)]=modname
