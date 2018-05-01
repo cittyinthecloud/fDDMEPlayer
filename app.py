@@ -8,14 +8,18 @@ from zipfile import ZipFile
 import subprocess
 import tempfile
 import os
+import logging
+
 
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
+logging.basicConfig(filename='fDDMEPlayer.log', filemode='w', level=logging.INFO, format="[%(levelname)s|%(levelno)s] (%(funcName)s) %(message)s")
 
 def findParent(names, path):
     for root, dirs, files in os.walk(path):
         for name in names:
             if name in files:
+                logging.info("Found game folder at: "+root)
                 return root
 
 def forceMergeFlatDir(srcDir, dstDir):
@@ -76,7 +80,14 @@ def addmodPress(button):
         with ZipFile(modfile) as modzip:
             with tempfile.TemporaryDirectory() as tmpdirname:
                 modzip.extractall(tmpdirname)
-                moveTree(findParent(("options.rpyc","scripts.rpa"),tmpdirname),str(modspath/slugify(modname)/'game'))
+                modGameDir=findParent(("options.rpyc","scripts.rpa","options.rpy"),tmpdirname)
+                if modGameDir is None:
+                    print("WTF this isn't a mod")
+                    logging.error("Not a mod :shrugika:")
+                    shutil.rmtree(str(modspath/slugify(modname)))
+                    return;
+                else:
+                    moveTree(,str(modspath/slugify(modname)/'game'))
 
         with shelve.open('mods.db',writeback=True) as mods:
             mods[slugify(modname)]=modname
