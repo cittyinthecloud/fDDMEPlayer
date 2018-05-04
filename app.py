@@ -87,7 +87,7 @@ def addmodPress(button):
                     shutil.rmtree(str(modspath/slugify(modname)))
                     return;
                 else:
-                    moveTree(,str(modspath/slugify(modname)/'game'))
+                    moveTree(modGameDir,str(modspath/slugify(modname)/'game'))
 
         with shelve.open('mods.db',writeback=True) as mods:
             mods[slugify(modname)]=modname
