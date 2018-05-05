@@ -3,14 +3,20 @@
   <head>
     <meta charset="utf-8">
     <title>fDDME Player</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
   </head>
   <body>
-    <ul>
-      {% for slug, mod in mods.items() %}
-      <li>{{mod}}<sub>{{slug}}</sub>  |  <a href="launchmod/{{slug}}">Launch {{mod}}</a></li>
-      {% endfor %}
-    </ul>
-    <a href="addmod">Add Mod</a>
-    <a href="quit">Quit Launcher</a>
+    <div id="allthemcontents">
+      <div id="headerdiv">
+        <p id="titletext">fDDMEPlayer</p>
+      </div>
+      <ul id="mainlist">
+        {% for slug, mod in mods.items() %}
+        <li>{{mod}}<sub>{{slug}}</sub>  |  <a href="launchmod/{{slug}}" id="launchbutton">Launch {{mod}}</a></li>
+        {% endfor %}
+      </ul>
+      <a href="addmod" class="button" id="addmod_button">Add Mod</a>
+      <a href="quit" class="button">Quit Launcher</a>
+    </div>
   </body>
 </html>

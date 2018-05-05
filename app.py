@@ -15,6 +15,8 @@ app = Flask(__name__)
 modspath = Path.cwd()/"mods"
 logging.basicConfig(filename='fDDMEPlayer.log', filemode='w', level=logging.INFO, format="[%(levelname)s|%(levelno)s] (%(funcName)s) %(message)s")
 
+addmodgui = None
+
 def findParent(names, path):
     for root, dirs, files in os.walk(path):
         for name in names:
@@ -52,7 +54,7 @@ def moveTree(src, dst):
         if os.path.isdir(s):
             isRecursive = not isAFlatDir(s)
             if isRecursive:
-                copyTree(s, d)
+                moveTree(s, d)
             else:
                 forceMergeFlatDir(s, d)
 
@@ -69,10 +71,17 @@ def modlist():
 
 @app.route('/addmod')
 def addmod():
+    global addmodgui
+    addmodgui = gui("Add Mod")
+    addmodgui.addLabel("title", "Add a Mod")
+    addmodgui.addLabelEntry("Mod Name")
+    addmodgui.addFileEntry("f1")
+    addmodgui.addButtons(["Add", "Cancel"], addmodPress)
     addmodgui.go()
     return "<meta http-equiv=\"refresh\" content=\"1; url=http://localhost:5000/\">Please wait..."
 
 def addmodPress(button):
+    global addmodgui
     modname = addmodgui.getEntry("Mod Name")
     modfile = addmodgui.getEntry("f1")
     if button == "Add":
@@ -91,8 +100,8 @@ def addmodPress(button):
 
         with shelve.open('mods.db',writeback=True) as mods:
             mods[slugify(modname)]=modname
-    addmodgui.clearAllEntries()
     addmodgui.stop()
+    del addmodgui
 
 @app.route('/launchmod/<slug>')
 def launchmod(slug):
@@ -112,10 +121,5 @@ if __name__ == '__main__':
             print("Press enter to continue...")
             input()
             raise SystemExit
-    addmodgui = gui("Add Mod")
-    addmodgui.addLabel("title", "Add a Mod")
-    addmodgui.addLabelEntry("Mod Name")
-    addmodgui.addFileEntry("f1")
-    addmodgui.addButtons(["Add", "Cancel"], addmodPress)
     print("Open your web brower to localhost:5000")
     app.run(threaded=False)
