@@ -4,6 +4,10 @@ A manager for DDLC mods.
 
 To run this you will need Python 3, which you can get from [https://www.python.org/](https://www.python.org/)
 
+Make sure you check the Add Python to PATH box on Windows
+
+![PATH](https://puu.sh/AhVzs/f3ccaf79d8.png)
+
 After that, place a copy of DDLC from download into this app's folder, and rename it to DDLC
 
 Then run setup.bat to setup the app
