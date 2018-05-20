@@ -17,7 +17,7 @@ a:hover {
 	background-color: #B259A6;
 }
 
-#allthemcontents {
+#container {
 	border: 3px solid black;
 	margin: 10px;
 	padding: 10px;
@@ -25,19 +25,19 @@ a:hover {
 	background-color: rgba(0, 0, 0, 0.3);
 }
 
-#headerdiv {
+header {
 	font-size: 14px;
 	margin-top: 0;
 }
 
-#titletext {
+h1 {
 	font-size: 50px;
 	margin-top: 0;
 	font-family: "McLaren", sans-serif;
 	color: white;
 }
 
-#mainlist {
+#modlist {
 	color: white;
 	font-size: 18px;
 	font-family: "Ubuntu", sans-serif;
@@ -54,11 +54,11 @@ a:hover {
 	padding: 3px;
 }
 
-#addmod_button {
+#addmodButton {
 	margin-right: 30px;
 }
 
-#launchbutton {
+#launchButton {
 	color: black;
 	background-color: cyan;
 	border: 2px solid black;
@@ -67,6 +67,6 @@ a:hover {
 	padding: 3px;
 }
 
-#launchbutton:hover {
+#launchButton:hover {
 	background-color: #00B2B2;
 }

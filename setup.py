@@ -4,7 +4,7 @@ import shelve
 import os
 
 if not (Path.cwd()/"DDLC").exists():
-    print("Move the download of DDLC into fDDMCPlayer's folder, rename the folder to DDLC, and run setup again")
+    print("Move the download of DDLC into fDDMEPlayer's folder, rename the folder to DDLC, and run setup again")
     raise SystemExit
 
 with shelve.open('mods.db',writeback=True) as db:

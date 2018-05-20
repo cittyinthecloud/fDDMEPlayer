@@ -2,21 +2,21 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>fDDME Player</title>
+    <title>fDDMEPlayer</title>
     <link rel="stylesheet" type="text/css" href="static/style.css">
   </head>
   <body>
-    <div id="allthemcontents">
-      <div id="headerdiv">
-        <p id="titletext">fDDMEPlayer</p>
-      </div>
-      <ul id="mainlist">
+    <div id="container">
+      <header>
+        <h1>fDDMEPlayer</h1>
+      </header>
+      <ul id="modlist">
         {% for slug, mod in mods.items() %}
-        <li>{{mod}}<sub>{{slug}}</sub>  |  <a href="launchmod/{{slug}}" id="launchbutton">Launch {{mod}}</a></li>
+        <li>{{mod}}<sub>{{slug}}</sub>  |  <a href="launchmod/{{slug}}" id="launchButton">Launch {{mod}}</a></li>
         {% endfor %}
       </ul>
-      <a href="addmod" class="button" id="addmod_button">Add Mod</a>
-      <a href="quit" class="button">Quit Launcher</a>
+      <a href="addmod" class="button" id="addmodButton">Add Mod</a>
+      <a href="quit" class="button" id="quitButton">Quit Launcher</a>
     </div>
   </body>
 </html>
