@@ -9,13 +9,26 @@ import subprocess
 import tempfile
 import os
 import logging
-
+import requests
 
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
 logging.basicConfig(filename='fDDMEPlayer.log', filemode='w', level=logging.INFO, format="[%(levelname)s|%(levelno)s] (%(funcName)s) %(message)s")
 
 addmodgui = None
+
+VERSION_URL="https://raw.githubusercontent.com/famous1622/fDDMEPlayer/master/version"
+
+def checkVersion():
+    r = requests.get(VERSION_URL)
+    try:
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        logging.warning("Update check failed :( {0}".format(e))
+    else:
+        with open("version") as fp:
+            if fp.read() != r.text:
+                print("New version {0} available! Please download this from https://github.com/famous1622/fDDMEPlayer".format(r.text.strip()))
 
 def findParent(names, path):
     for root, dirs, files in os.walk(path):
@@ -121,5 +134,6 @@ if __name__ == '__main__':
             print("Press enter to continue...")
             input()
             raise SystemExit
+    checkVersion()
     print("Open your web brower to localhost:5000")
     app.run(threaded=False)
