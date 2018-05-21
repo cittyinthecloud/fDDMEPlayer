@@ -1,6 +1,9 @@
 # fDDMEPlayer
 
-A manager for DDLC mods.
+**Download from [releases here](https://github.com/famous1622/fDDMEPlayer/releases)**
+Downloading straight this repository will cause you to end up with a in-development version of the launcher, where bugs will be more likely to occur. 
+
+A mod launcher for DDLC.
 
 To run this you will need Python 3, which you can get from [https://www.python.org/](https://www.python.org/)
 
