@@ -1,6 +1,6 @@
 # fDDMEPlayer
 
-**Download from [releases here](https://github.com/famous1622/fDDMEPlayer/releases)**
+**[Download from releases here](https://github.com/famous1622/fDDMEPlayer/releases)**
 
 Downloading straight this repository will cause you to end up with a in-development version of the launcher, where bugs will be more likely to occur. 
 
