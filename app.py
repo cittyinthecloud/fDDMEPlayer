@@ -10,6 +10,7 @@ import tempfile
 import os
 import logging
 import requests
+import fnmatch
 
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
@@ -18,6 +19,7 @@ logging.basicConfig(filename='fDDMEPlayer.log', filemode='w', level=logging.INFO
 addmodgui = None
 
 VERSION_URL="https://raw.githubusercontent.com/famous1622/fDDMEPlayer/master/version"
+PATTERNS = ("options.rpyc","*.rpa","options.rpy")
 
 def checkVersion():
     r = requests.get(VERSION_URL)
@@ -30,12 +32,13 @@ def checkVersion():
             if fp.read() != r.text:
                 print("New version {0} available! Please download this from https://github.com/famous1622/fDDMEPlayer".format(r.text.strip()))
 
-def findParent(names, path):
+def findParent(patterns, path):
     for root, dirs, files in os.walk(path):
-        for name in names:
-            if name in files:
-                logging.info("Found game folder at: "+root)
-                return root
+        for pattern in patterns:
+            for name in files:
+                if fnmatch.fnmatch(name, pattern):
+                    logging.info("Found game folder at: "+root)
+                    return root
 
 def forceMergeFlatDir(srcDir, dstDir):
     if not os.path.exists(dstDir):
@@ -102,9 +105,9 @@ def addmodPress(button):
         with ZipFile(modfile) as modzip:
             with tempfile.TemporaryDirectory() as tmpdirname:
                 modzip.extractall(tmpdirname)
-                modGameDir=findParent(("options.rpyc","scripts.rpa","options.rpy"),tmpdirname)
+                modGameDir=findParent(PATTERNS,tmpdirname)
                 if modGameDir is None:
-                    print("WTF this isn't a mod")
+                    print("That isn't a mod")
                     logging.error("Not a mod :shrugika:")
                     shutil.rmtree(str(modspath/slugify(modname)))
                     return;
