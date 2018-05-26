@@ -1,72 +1,72 @@
 @import url('https://fonts.googleapis.com/css?family=McLaren|Noto+Sans|Ubuntu');
 
 body {
-	background-image: url("bg.png");
-	background-size: cover;
-	line-height: 1.5;
-	color: black;
-	margin: 0;
-	padding: 0;
+    background-image: url("bg.png");
+    background-size: cover;
+    line-height: 1.5;
+    color: black;
+    margin: 0;
+    padding: 0;
 }
 
 a {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 a:hover {
-	background-color: #B259A6;
+    background-color: #B259A6;
 }
 
 #container {
-	border: 3px solid black;
-	margin: 10px;
-	padding: 10px;
-	display: inline-block;
-	background-color: rgba(0, 0, 0, 0.3);
+    border: 3px solid black;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 header {
-	font-size: 14px;
-	margin-top: 0;
+    font-size: 14px;
+    margin-top: 0;
 }
 
 h1 {
-	font-size: 50px;
-	margin-top: 0;
-	font-family: "McLaren", sans-serif;
-	color: white;
+    font-size: 50px;
+    margin-top: 0;
+    font-family: "McLaren", sans-serif;
+    color: white;
 }
 
 #modlist {
-	color: white;
-	font-size: 18px;
-	font-family: "Ubuntu", sans-serif;
-	list-style-type: none;
+    color: white;
+    font-size: 18px;
+    font-family: "Ubuntu", sans-serif;
+    list-style-type: none;
   line-height: 2;
 }
 
 .button {
-	color: black;
-	background-color: #FF7FED;
-	border: 2px solid black;
-	font-family: "Noto Sans", sans-serif;
-	font-size: 20px;
-	padding: 3px;
+    color: black;
+    background-color: #FF7FED;
+    border: 2px solid black;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 20px;
+    padding: 3px;
 }
 
 #addmodButton {
-	margin-right: 30px;
+    margin-right: 30px;
 }
 
 #launchButton {
-	color: black;
-	background-color: cyan;
-	border: 2px solid black;
-	font-family: "Noto Sans", sans-serif;
-	font-size: 16px;
-	padding: 3px;
+    color: black;
+    background-color: cyan;
+    border: 2px solid black;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 16px;
+    padding: 3px;
 }
 
 #launchButton:hover {
-	background-color: #00B2B2;
+    background-color: #00B2B2;
 }
