@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from appJar import gui
 from slugify import slugify
 from pathlib import Path
@@ -11,15 +11,27 @@ import os
 import logging
 import requests
 import fnmatch
+import configparser
 
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
+config = configparser.ConfigParser()
+config.read('config.ini')
 logging.basicConfig(filename='fDDMEPlayer.log', filemode='w', level=logging.INFO, format="[%(levelname)s|%(levelno)s] (%(funcName)s) %(message)s")
+
 
 addmodgui = None
 
 VERSION_URL="https://raw.githubusercontent.com/famous1622/fDDMEPlayer/master/version"
 PATTERNS = ("options.rpyc","*.rpa","options.rpy")
+
+def saveConfig():
+    with open("config.ini") as configfile:
+        config.write(configfile)
+
+@app.route('/assets/<path:filename>')
+def loadSkinedAsset(filename):
+    return send_from_directory(Path.cwd()/"skins"/config["fDDMEPlayer"]["skin"],filename)
 
 def checkVersion():
     r = requests.get(VERSION_URL)
