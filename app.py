@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from appJar import gui
 from slugify import slugify
 from pathlib import Path
@@ -10,14 +10,31 @@ import tempfile
 import os
 import logging
 import requests
+import fnmatch
+import configparser
+from nocache import nocache
 
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
+config = configparser.ConfigParser()
+config.read('config.ini')
+currentSkin = config["fDDMEPlayer"]["skin"]
 logging.basicConfig(filename='fDDMEPlayer.log', filemode='w', level=logging.INFO, format="[%(levelname)s|%(levelno)s] (%(funcName)s) %(message)s")
+
 
 addmodgui = None
 
 VERSION_URL="https://raw.githubusercontent.com/famous1622/fDDMEPlayer/master/version"
+PATTERNS = ("options.rpyc","*.rpa","options.rpy")
+
+def saveConfig():
+    with open("config.ini", 'w') as configfile:
+        config.write(configfile)
+
+@app.route('/assets/<path:filename>')
+@nocache
+def loadSkinedAsset(filename):
+    return send_from_directory(Path.cwd()/"skins"/currentSkin,filename)
 
 def checkVersion():
     r = requests.get(VERSION_URL)
@@ -30,12 +47,16 @@ def checkVersion():
             if fp.read() != r.text:
                 print("New version {0} available! Please download this from https://github.com/famous1622/fDDMEPlayer".format(r.text.strip()))
 
-def findParent(names, path):
+def getSkins():
+    return (x.name for x in (Path.cwd()/"skins").iterdir() if x.is_dir())
+
+def findParent(patterns, path):
     for root, dirs, files in os.walk(path):
-        for name in names:
-            if name in files:
-                logging.info("Found game folder at: "+root)
-                return root
+        for pattern in patterns:
+            for name in files:
+                if fnmatch.fnmatch(name, pattern):
+                    logging.info("Found game folder at: "+root)
+                    return root
 
 def forceMergeFlatDir(srcDir, dstDir):
     if not os.path.exists(dstDir):
@@ -78,9 +99,24 @@ def shutdown_server():
     func()
 
 @app.route('/')
+@nocache
 def modlist():
     with shelve.open('mods.db') as mods:
         return render_template('modlist.html', mods=dict(mods))
+
+@app.route('/settings.html')
+def settings():
+    return render_template('settings.html', skins=getSkins(), currSkin = currentSkin)
+
+@app.route('/setskin')
+@nocache
+def setskin():
+    global currentSkin
+    newskin = request.args.get('skin', 'default')
+    config["fDDMEPlayer"]["skin"] = newskin
+    currentSkin = newskin
+    saveConfig()
+    return "<meta http-equiv=\"refresh\" content=\"1; url=http://localhost:5000/\">Please wait..."
 
 @app.route('/addmod')
 def addmod():
@@ -102,9 +138,9 @@ def addmodPress(button):
         with ZipFile(modfile) as modzip:
             with tempfile.TemporaryDirectory() as tmpdirname:
                 modzip.extractall(tmpdirname)
-                modGameDir=findParent(("options.rpyc","scripts.rpa","options.rpy"),tmpdirname)
+                modGameDir=findParent(PATTERNS,tmpdirname)
                 if modGameDir is None:
-                    print("WTF this isn't a mod")
+                    print("That isn't a mod")
                     logging.error("Not a mod :shrugika:")
                     shutil.rmtree(str(modspath/slugify(modname)))
                     return;
