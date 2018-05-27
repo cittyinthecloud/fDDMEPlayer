@@ -27,6 +27,10 @@ addmodgui = None
 VERSION_URL="https://raw.githubusercontent.com/famous1622/fDDMEPlayer/master/version"
 PATTERNS = ("options.rpyc","*.rpa","options.rpy")
 
+
+class InvalidModError(Exception):
+    pass
+
 def saveConfig():
     with open("config.ini", 'w') as configfile:
         config.write(configfile)
@@ -129,24 +133,44 @@ def addmod():
     addmodgui.go()
     return "<meta http-equiv=\"refresh\" content=\"1; url=http://localhost:5000/\">Please wait..."
 
+def installZipMod(file,slug):
+    with ZipFile(file) as modzip:
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            modzip.extractall(tmpdirname)
+            modGameDir=findParent(PATTERNS,tmpdirname)
+            if modGameDir is None:
+                print("That isn't a mod")
+                logging.error("Not a mod :shrugika:")
+                raise InvalidModError
+            else:
+                moveTree(modGameDir,str(modspath/slug/'game'))
+
+def installRpaMod(file,slug):
+    with tempfile.TemporaryDirectory() as tmpdirname:
+        shutil.copy(file,tmpdirname)
+        moveTree(tmpdirname,str(modspath/slug/'game'))
+
+
+
 def addmodPress(button):
     global addmodgui
     modname = addmodgui.getEntry("Mod Name")
     modfile = addmodgui.getEntry("f1")
     if button == "Add":
         shutil.copytree(str(modspath/"vanilla"),str(modspath/slugify(modname)))
-        with ZipFile(modfile) as modzip:
-            with tempfile.TemporaryDirectory() as tmpdirname:
-                modzip.extractall(tmpdirname)
-                modGameDir=findParent(PATTERNS,tmpdirname)
-                if modGameDir is None:
-                    print("That isn't a mod")
-                    logging.error("Not a mod :shrugika:")
-                    shutil.rmtree(str(modspath/slugify(modname)))
-                    return;
-                else:
-                    moveTree(modGameDir,str(modspath/slugify(modname)/'game'))
-
+        ext = Path(modfile).suffix
+        if ext == ".zip":
+            try:
+                installZipMod(modfile,slugify(modname))
+            except InvalidModError:
+                shutil.rmtree(str(modspath/slugify(modname)))
+                return
+        elif ext == ".rpa":
+            installRpaMod(modfile,slugify(modname))
+        else:
+            print("{} files are not a supported mod type. If they should be, please create an issue on GitHub.".format(ext))
+            shutil.rmtree(str(modspath/slugify(modname)))
+            return
         with shelve.open('mods.db',writeback=True) as mods:
             mods[slugify(modname)]=modname
     addmodgui.stop()
