@@ -7,7 +7,6 @@ html, body {
 
 body {
     background-image: url("bg.png");
-    background-size: cover;
     line-height: 1.5;
     color: black;
     margin: 0;
