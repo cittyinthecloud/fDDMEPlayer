@@ -5,6 +5,7 @@ from pathlib import Path
 import shelve
 import shutil
 from zipfile import ZipFile
+from tarfile import TarFile
 import subprocess
 import tempfile
 import os
@@ -145,6 +146,18 @@ def installZipMod(file,slug):
             else:
                 moveTree(modGameDir,str(modspath/slug/'game'))
 
+def installTarballMod(file,slug):
+    with TarFile(file) as modzip:
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            modzip.extractall(tmpdirname)
+            modGameDir=findParent(PATTERNS,tmpdirname)
+            if modGameDir is None:
+                print("That isn't a mod")
+                logging.error("Not a mod :shrugika:")
+                raise InvalidModError
+            else:
+                moveTree(modGameDir,str(modspath/slug/'game'))
+
 def installRpaMod(file,slug):
     with tempfile.TemporaryDirectory() as tmpdirname:
         shutil.copy(file,tmpdirname)
@@ -159,15 +172,18 @@ def addmodPress(button):
     if button == "Add":
         shutil.copytree(str(modspath/"vanilla"),str(modspath/slugify(modname)))
         ext = Path(modfile).suffix
-        if ext == ".zip":
-            try:
-                installZipMod(modfile,slugify(modname))
-            except InvalidModError:
-                shutil.rmtree(str(modspath/slugify(modname)))
-                return
-        elif ext == ".rpa":
-            installRpaMod(modfile,slugify(modname))
-        else:
+        try:
+            {
+                ".zip":installZipMod,
+                ".gz":installTarballMod,
+                ".rpa":installRpaMod,
+            }[ext](modfile,slugify(modname))
+        except InvalidModError:
+            shutil.rmtree(str(modspath/slugify(modname)))
+            logging.error("Invalid Mod")
+            print("Invalid Mod :Uwaaaa:")
+            return
+        except KeyError:
             print("{} files are not a supported mod type. If they should be, please create an issue on GitHub.".format(ext))
             shutil.rmtree(str(modspath/slugify(modname)))
             return
