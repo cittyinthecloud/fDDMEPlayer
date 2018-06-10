@@ -12,7 +12,7 @@
       </header>
       <ul id="modlist">
         {% for slug, mod in mods.items() %}
-        <li>{{mod}}<sub>{{slug}}</sub>  |  <a href="launchmod/{{slug}}" id="launchButton">Launch {{mod}}</a></li>
+        <li>{{mod}}<sub>{{slug}}</sub>  |  <a href="launchmod/{{slug}}" class="launchButton">Launch {{mod}}</a></li>
         {% endfor %}
       </ul>
       <a href="addmod" class="button" id="addmodButton">Add Mod</a>

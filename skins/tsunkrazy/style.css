@@ -66,7 +66,7 @@ h1 {
     margin-right: 30px;
 }
 
-#launchButton {
+.launchButton {
     color: black;
     background-color: cyan;
     border: 2px solid black;
@@ -75,6 +75,6 @@ h1 {
     padding: 3px;
 }
 
-#launchButton:hover {
+.launchButton:hover {
     background-color: #00B2B2;
 }
