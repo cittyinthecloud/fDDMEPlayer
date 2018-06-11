@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <title>fDDMEPlayer</title>
     <link rel="stylesheet" type="text/css" href="assets/style.css">
+    <script src="static/jquery.js"></script>
+    <script src="static/contextMenu.js"></script>
+    <script src="static/main.js"></script>
   </head>
   <body>
     <div id="container">
@@ -12,7 +15,7 @@
       </header>
       <ul id="modlist">
         {% for slug, mod in mods.items() %}
-        <li>{{mod}}<sub>{{slug}}</sub>  |  <a href="launchmod/{{slug}}" class="launchButton">Launch {{mod}}</a></li>
+        <li>{{mod}}<sub>{{slug}}</sub>  |  <a href="launchmod/{{slug}}" class="launchButton" modid="{{slug}}">Launch {{mod}}</a></li>
         {% endfor %}
       </ul>
       <a href="addmod" class="button" id="addmodButton">Add Mod</a>

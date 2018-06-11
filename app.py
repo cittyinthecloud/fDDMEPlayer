@@ -169,32 +169,42 @@ def addmodPress(button):
     global addmodgui
     modname = addmodgui.getEntry("Mod Name")
     modfile = addmodgui.getEntry("f1")
+    modslug = slugify(modname)
     if button == "Add":
-        shutil.copytree(str(modspath/"vanilla"),str(modspath/slugify(modname)))
+        while (modspath/modslug).exists():
+            modslug += "-"
+        shutil.copytree(str(modspath/"vanilla"),str(modspath/modslug))
         ext = Path(modfile).suffix
         try:
             {
                 ".zip":installZipMod,
                 ".gz":installTarballMod,
                 ".rpa":installRpaMod,
-            }[ext](modfile,slugify(modname))
+            }[ext](modfile,modslug)
         except InvalidModError:
-            shutil.rmtree(str(modspath/slugify(modname)))
+            shutil.rmtree(str(modspath/modslug))
             logging.error("Invalid Mod")
             print("Invalid Mod :Uwaaaa:")
             return
         except KeyError:
             print("{} files are not a supported mod type. If they should be, please create an issue on GitHub.".format(ext))
-            shutil.rmtree(str(modspath/slugify(modname)))
+            shutil.rmtree(str(modspath/modslug))
             return
         with shelve.open('mods.db',writeback=True) as mods:
-            mods[slugify(modname)]=modname
+            mods[modslug]=modname
     addmodgui.stop()
     del addmodgui
 
 @app.route('/launchmod/<slug>')
 def launchmod(slug):
     subprocess.Popen(str(modspath/slug/"DDLC.exe"))
+    return "<meta http-equiv=\"refresh\" content=\"1; url=http://localhost:5000/\">Please wait..."
+
+@app.route('/deletemod/<slug>')
+def deletemod(slug):
+    with shelve.open('mods.db',writeback=True) as mods:
+        del mods[slug]
+    shutil.rmtree(str(modspath/slug))
     return "<meta http-equiv=\"refresh\" content=\"1; url=http://localhost:5000/\">Please wait..."
 
 @app.route('/quit')
