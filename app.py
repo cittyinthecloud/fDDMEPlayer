@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, send_from_directory
 from appJar import gui
 from slugify import slugify
 from pathlib import Path
-import shelve
 import shutil
 from zipfile import ZipFile
 from tarfile import TarFile
@@ -14,6 +13,8 @@ import requests
 import fnmatch
 import configparser
 from nocache import nocache
+import moddb
+from moddb import Mod
 
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
@@ -106,8 +107,7 @@ def shutdown_server():
 @app.route('/')
 @nocache
 def modlist():
-    with shelve.open('mods.db') as mods:
-        return render_template('modlist.html', mods=dict(mods))
+    return render_template('modlist.html', mods=moddb.getModList())
 
 @app.route('/settings.html')
 def settings():
@@ -163,8 +163,6 @@ def installRpaMod(file,slug):
         shutil.copy(file,tmpdirname)
         moveTree(tmpdirname,str(modspath/slug/'game'))
 
-
-
 def addmodPress(button):
     global addmodgui
     modname = addmodgui.getEntry("Mod Name")
@@ -190,8 +188,7 @@ def addmodPress(button):
             print("{} files are not a supported mod type. If they should be, please create an issue on GitHub.".format(ext))
             shutil.rmtree(str(modspath/modslug))
             return
-        with shelve.open('mods.db',writeback=True) as mods:
-            mods[modslug]=modname
+        moddb.addMod(Mod(modslug,modname,False))
     addmodgui.stop()
     del addmodgui
 
@@ -202,8 +199,7 @@ def launchmod(slug):
 
 @app.route('/deletemod/<slug>')
 def deletemod(slug):
-    with shelve.open('mods.db',writeback=True) as mods:
-        del mods[slug]
+    moddb.removeModBySlug(slug)
     shutil.rmtree(str(modspath/slug))
     return "<meta http-equiv=\"refresh\" content=\"1; url=http://localhost:5000/\">Please wait..."
 
@@ -214,12 +210,12 @@ def quitprogram():
 
 
 if __name__ == '__main__':
-    with shelve.open('mods.db') as mods:
-        if "vanilla" not in mods.keys():
-            print("Please run setup.bat before run.bat.")
-            print("Press enter to continue...")
-            input()
-            raise SystemExit
+    if not moddb.modExists("vanilla"):
+        print("Please run setup.bat as administrator before run.bat.")
+        print("Run migrate.bat as admin if you came from v0.2 or before")
+        print("Press enter to continue...")
+        input()
+        raise SystemExit
     checkVersion()
     print("Open your web brower to localhost:5000")
     app.run(threaded=False)
