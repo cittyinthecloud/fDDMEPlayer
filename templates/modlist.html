@@ -15,7 +15,12 @@
       </header>
       <ul id="modlist">
         {% for mod in mods %}
-        <li>{{mod.name}}<sub>{{mod.slug}}</sub>  |  <a href="launchmod/{{mod.slug}}" class="launchButton" modid="{{mod.slug}}">Launch {{mod.name}}</a></li>
+        <li>
+            {{mod.name}}<sub>{{mod.slug}}</sub> | <a href="launchmod/{{mod.slug}}" class="launchButton" modid="{{mod.slug}}">Launch {{mod.name}}</a>
+            {% if mod.sayonika %}
+            <img class=sayonika src="assets/sayonika.png">
+            {% endif %}
+        </li>
         {% endfor %}
       </ul>
       <a href="addmod" class="button" id="addmodButton">Add Mod</a>

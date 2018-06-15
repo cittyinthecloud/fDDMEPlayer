@@ -48,7 +48,7 @@ h1 {
     font-size: 18px;
     font-family: "Ubuntu", sans-serif;
     list-style-type: none;
-  line-height: 2;
+    line-height: 2;
 }
 
 .button {
@@ -58,6 +58,13 @@ h1 {
     font-family: "Noto Sans", sans-serif;
     font-size: 20px;
     padding: 3px;
+}
+
+.sayonika {
+    height: 30px;
+    width: auto;
+    vertical-align: middle;
+    padding-bottom: 5px
 }
 
 #addmodButton {

@@ -63,6 +63,14 @@ h1 {
     padding: 3px;
 }
 
+.sayonika {
+    height: 30px;
+    width: auto;
+    vertical-align: middle;
+    padding-bottom: 5px
+}
+
+
 #addmodButton {
     margin-right: 30px;
 }
