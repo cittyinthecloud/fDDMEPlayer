@@ -2,11 +2,12 @@ import json
 from pathlib import Path
 
 class Mod:
-    def __init__(self, slug, name, sayonika=False, sayonikaid=0):
+    def __init__(self, slug, name, sayonika=False, sayonikaid=0, sayonikaVersion=""):
         self.slug=slug
         self.name=name
         self.sayonika=sayonika
         self.sayonikaid=sayonikaid
+        self.sayonikaVersion=sayonikaVersion
 
 def getModList():
     if not Path("modlist.json").exists():
@@ -30,7 +31,7 @@ def getModBySlug(slug):
     if details["sayonika"]==-1:
         return Mod(slug,details["name"],False)
     else:
-        return Mod(slug,details["name"],True,details["sayonika"])
+        return Mod(slug,details["name"],True,details["sayonika"],details["sayonikaVersion"])
 
 def addMod(mod):
     modlist = getModList()
@@ -53,7 +54,7 @@ def saveModList(list):
             sayoid=mod.sayonikaid
         else:
             sayoid=-1
-        moddict[mod.slug]={"name":mod.name,"sayonika":sayoid}
+        moddict[mod.slug]={"name":mod.name,"sayonika":sayoid,"sayonikaVersion":mod.sayonikaVersion}
     with open("modlist.json","w") as f:
         json.dump(moddict, f)
 
