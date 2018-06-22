@@ -8,6 +8,11 @@ class Mod:
         self.sayonika=sayonika
         self.sayonikaid=sayonikaid
         self.sayonikaVersion=sayonikaVersion
+    def __eq__(self, other):
+        try:
+            return self.slug == other.slug
+        except AttributeError:
+            return False
 
 def getModList():
     if not Path("modlist.json").exists():
