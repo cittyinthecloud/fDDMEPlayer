@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 class Mod:
-    def __init__(self, slug, name, sayonika=False, sayonikaid=0, sayonikaVersion=""):
+    def __init__(self, slug, name, sayonika=False, sayonikaid="", sayonikaVersion=""):
         self.slug=slug
         self.name=name
         self.sayonika=sayonika
