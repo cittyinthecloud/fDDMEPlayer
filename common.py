@@ -59,6 +59,8 @@ def installMod(modspath, name, slug, file):
         print("{} files are not a supported mod type. If they should be, please create an issue on GitHub.".format(ext))
         shutil.rmtree(str(modspath/slug))
         return
+    with open(modspath/slug/"environment.txt","w") as f:
+        f.write('FDDME_LAUNCHED = "1"\n')
     moddb.addMod(Mod(slug,name,False))
 
 def findParent(patterns, path):
