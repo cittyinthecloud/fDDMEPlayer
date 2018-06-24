@@ -16,6 +16,8 @@ from nocache import nocache
 import moddb
 from moddb import Mod
 from common import installMod
+import sys
+from _thread import interrupt_main
 
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
@@ -123,7 +125,7 @@ def run_server():
         print("Run migrate.bat as admin if you came from v0.2 or before")
         print("Press enter to continue...")
         input()
-        raise SystemExit
+        os._exit(1)
     checkVersion()
     app.run(host="127.0.0.1", port=23948, threaded=True)
 
@@ -133,7 +135,7 @@ if __name__ == '__main__':
         print("Run migrate.bat as admin if you came from v0.2 or before")
         print("Press enter to continue...")
         input()
-        raise SystemExit
+        sys.exit(1)
     checkVersion()
     print("Open your web brower to localhost:5000")
     app.run(threaded=False)
