@@ -117,6 +117,15 @@ def quitprogram():
     shutdown_server()
     return "Application closed."
 
+def run_server():
+    if not moddb.modExists("vanilla"):
+        print("Please run setup.bat as administrator before run.bat.")
+        print("Run migrate.bat as admin if you came from v0.2 or before")
+        print("Press enter to continue...")
+        input()
+        raise SystemExit
+    checkVersion()
+    app.run(host="127.0.0.1", port=23948, threaded=True)
 
 if __name__ == '__main__':
     if not moddb.modExists("vanilla"):
