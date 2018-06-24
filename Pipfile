@@ -8,7 +8,7 @@ python-slugify = "*"
 requests = "*"
 appJar = "*"
 Flask = "*"
-pywebview = "*"
+pywebview = {extras = ["winforms"]}
 
 [dev-packages]
 
