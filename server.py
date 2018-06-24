@@ -126,7 +126,7 @@ def run_server():
         input()
         os._exit(1)
     checkVersion()
-    app.run(host="127.0.0.1", port=23948, threaded=True)
+    app.run(host="127.0.0.1", port=5000, threaded=True)
 
 if __name__ == '__main__':
     if not moddb.modExists("vanilla"):

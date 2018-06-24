@@ -32,9 +32,9 @@ if __name__ == '__main__':
     t.start()
     logger.debug("Checking server")
 
-    while not url_ok("127.0.0.1", 23948):
+    while not url_ok("127.0.0.1", 5000):
         sleep(0.1)
 
     logger.debug("Server started")
     webview.create_window("fDDMEPlayer",
-                          "http://127.0.0.1:23948",min_size=(1280,720))
+                          "http://127.0.0.1:5000",min_size=(1280,720))
