@@ -17,7 +17,6 @@ import moddb
 from moddb import Mod
 from common import installMod
 import sys
-from _thread import interrupt_main
 
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
