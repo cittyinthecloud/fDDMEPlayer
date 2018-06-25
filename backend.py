@@ -36,7 +36,7 @@ def installmodgui():
     addmodgui.go()
     return jsonify({})
 
-def addmodPress():
+def addmodPress(button):
     global addmodgui
     modname = addmodgui.getEntry("Mod Name")
     modfile = addmodgui.getEntry("f1")
@@ -44,7 +44,7 @@ def addmodPress():
     if button == "Add":
         while moddb.modExists(modslug):
             modslug += "-"
-        common.installMod(modspath, modname,modslug,modfile)
+        common.installMod(modname,modslug,modfile)
     addmodgui.stop()
     del addmodgui
 

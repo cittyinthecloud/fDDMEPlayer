@@ -52,7 +52,7 @@ def installRpaMod(slug,file):
 
 
 def installMod(name, slug, file):
-    shutil.copytree(str(modspath/"vanilla"),str(MODS_PATH/slug))
+    shutil.copytree(str(MODS_PATH/"vanilla"),str(MODS_PATH/slug))
     ext = Path(file).suffix
     try:
         {

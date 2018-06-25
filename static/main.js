@@ -8,7 +8,7 @@ var menu = [{
             } else {
                 if(window.confirm("Are you sure you want to delete this mod ("+modid+")")){
                     $.get("/api/"+modid+"/delete",function(){
-                        console.log("Launched mod.")
+                        window.location.reload();
                     })
                 }
             }
@@ -21,5 +21,11 @@ $(document).ready(function(){
             console.log("Launched mod.")
         })
         event.preventDefault()
+    })
+
+    $("#addmodButton").click(function (event) {
+        $.get("/api/openInstallModGUI",function(){
+            window.location.reload();
+        })
     })
 });
