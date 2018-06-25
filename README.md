@@ -2,7 +2,7 @@
 
 **[Download from releases here](https://github.com/famous1622/fDDMEPlayer/releases)**
 
-Downloading straight this repository will cause you to end up with a in-development version of the launcher, where bugs will be more likely to occur.
+Downloading straight this repository will cause you to end up with a in-development version of the launcher, where bugs will be more likely to occur. 
 
 A mod launcher for DDLC.
 
@@ -35,10 +35,9 @@ Feature Requests / Bug Reports
 ------------------------------
 [Create an issue here.](https://github.com/famous1622/fDDMEPlayer/issues)
 
-Bug famous1622#1622 on Discord if it's bad ¯\\\_(ツ)\_/¯
+Bug famous1622#6427 on Discord if it's bad ¯\\\_(ツ)\_/¯
 
 Contributors
 ------------
 * TsunKrAZy for his character design
-* Wheatley for the polka dot coloring
-* Shoobi for having the amazing dog Toast :D
+* Wheatley for the polka dot coloring 
