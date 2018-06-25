@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+python-slugify = "*"
+requests = "*"
+appJar = "*"
+Flask = "*"
+pywebview = {extras = ["winforms"]}
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"

@@ -16,6 +16,7 @@ from nocache import nocache
 import moddb
 from moddb import Mod
 from common import installMod
+import sys
 
 app = Flask(__name__)
 modspath = Path.cwd()/"mods"
@@ -117,6 +118,15 @@ def quitprogram():
     shutdown_server()
     return "Application closed."
 
+def run_server():
+    if not moddb.modExists("vanilla"):
+        print("Please run setup.bat as administrator before run.bat.")
+        print("Run migrate.bat as admin if you came from v0.2 or before")
+        print("Press enter to continue...")
+        input()
+        os._exit(1)
+    checkVersion()
+    app.run(host="127.0.0.1", port=5000, threaded=True)
 
 if __name__ == '__main__':
     if not moddb.modExists("vanilla"):
@@ -124,7 +134,7 @@ if __name__ == '__main__':
         print("Run migrate.bat as admin if you came from v0.2 or before")
         print("Press enter to continue...")
         input()
-        raise SystemExit
+        sys.exit(1)
     checkVersion()
     print("Open your web brower to localhost:5000")
     app.run(threaded=False)
