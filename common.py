@@ -8,10 +8,20 @@ from zipfile import ZipFile
 from tarfile import TarFile
 import moddb
 from moddb import Mod
+import subprocess
+
+MODS_PATH = Path.cwd()/"mods"
 
 PATTERNS = ("options.rpyc","*.rpa","options.rpy")
 
-def installZipMod(modspath,file,slug):
+def launch_mod(slug):
+    subprocess.Popen(str(MODS_PATH/slug/"DDLC.exe"))
+
+def delete_mod(slug):
+    moddb.removeModBySlug(slug)
+    shutil.rmtree(str(MODS_PATH/slug))
+
+def installZipMod(slug,file):
     with tempfile.TemporaryDirectory() as tmpdirname:
         with ZipFile(file) as modzip:
             modzip.extractall(tmpdirname)
@@ -21,9 +31,9 @@ def installZipMod(modspath,file,slug):
             logging.error("Not a mod :shrugika:")
             raise InvalidModError
         else:
-            moveTree(modGameDir,str(modspath/slug/'game'))
+            moveTree(modGameDir,str(MODS_PATH/slug/'game'))
 
-def installTarballMod(modspath,file,slug):
+def installTarballMod(slug,file):
     with tempfile.TemporaryDirectory() as tmpdirname:
         with TarFile(file) as tarball:
             tarball.extractall(tmpdirname)
@@ -33,33 +43,33 @@ def installTarballMod(modspath,file,slug):
             logging.error("Not a mod :shrugika:")
             raise InvalidModError
         else:
-            moveTree(modGameDir,str(modspath/slug/'game'))
+            moveTree(modGameDir,str(MODS_PATH/slug/'game'))
 
-def installRpaMod(modspath,file,slug):
+def installRpaMod(slug,file):
     with tempfile.TemporaryDirectory() as tmpdirname:
         shutil.copy(file,tmpdirname)
-        moveTree(tmpdirname,str(modspath/slug/'game'))
+        moveTree(tmpdirname,str(MODS_PATH/slug/'game'))
 
 
-def installMod(modspath, name, slug, file):
-    shutil.copytree(str(modspath/"vanilla"),str(modspath/slug))
+def installMod(name, slug, file):
+    shutil.copytree(str(modspath/"vanilla"),str(MODS_PATH/slug))
     ext = Path(file).suffix
     try:
         {
             ".zip":installZipMod,
             ".gz":installTarballMod,
             ".rpa":installRpaMod,
-        }[ext](modspath,file,slug)
+        }[ext](slug,file)
     except InvalidModError:
-        shutil.rmtree(str(modspath/slug))
+        shutil.rmtree(str(MODS_PATH/slug))
         logging.error("Invalid Mod")
         print("Invalid Mod :Uwaaaa:")
         return
     except KeyError:
         print("{} files are not a supported mod type. If they should be, please create an issue on GitHub.".format(ext))
-        shutil.rmtree(str(modspath/slug))
+        shutil.rmtree(str(MODS_PATH/slug))
         return
-    with open(modspath/slug/"environment.txt","w") as f:
+    with open(MODS_PATH/slug/"environment.txt","w") as f:
         f.write('FDDME_LAUNCHED = "1"\n')
     moddb.addMod(Mod(slug,name,False))
 
