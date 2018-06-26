@@ -7,7 +7,7 @@ def saveModList(list):
         if mod.sayonika:
             sayoid=mod.sayonikaid
         else:
-            sayoid=-1
+            sayoid=None
         moddict[mod.slug]={"name":mod.name,"sayonika":sayoid,"sayonikaVersion":mod.sayonikaVersion}
     with open("modlist.json","w") as f:
         json.dump(moddict, f)
@@ -45,7 +45,7 @@ def getModBySlug(slug):
     with open("modlist.json") as f:
         moddict=json.load(f)
     details=moddict[slug]
-    if details["sayonika"]==-1:
+    if details["sayonika"]==None:
         return Mod(slug,details["name"],False)
     else:
         return Mod(slug,details["name"],True,details["sayonika"],details["sayonikaVersion"])
