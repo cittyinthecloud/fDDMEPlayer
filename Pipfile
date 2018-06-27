@@ -7,10 +7,11 @@ name = "pypi"
 python-slugify = "*"
 requests = "*"
 appJar = "*"
-Flask = "*"
 pywebview = {extras = ["winforms"]}
+flask = "*"
 
 [dev-packages]
+pyinstaller = "*"
 
 [requires]
 python_version = "3.6"

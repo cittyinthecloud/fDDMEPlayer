@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>fDDMEPlayer</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
     <script src="static/jquery.js"></script>
     <script src="static/contextMenu.js"></script>
     <script src="static/main.js"></script>
@@ -18,12 +18,12 @@
         <li>
             {{mod.name}}<sub>{{mod.slug}}</sub> | <a href="launchmod/{{mod.slug}}" class="launchButton" modid="{{mod.slug}}">Launch {{mod.name}}</a>
             {% if mod.sayonika %}
-            <img class=sayonika src="static/sayonika.png">
+            <img class=sayonika src="assets/sayonika.png">
             {% endif %}
         </li>
         {% endfor %}
       </ul>
-      <a href="#" class="button" id="addmodButton">Add Mod</a>
+      <a href="addmod" class="button" id="addmodButton">Add Mod</a>
       <a href="settings.html" class="button" id="settingsButton">Launcher Settings</a>
     </div>
   </body>

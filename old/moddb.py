@@ -1,20 +1,6 @@
 import json
 from pathlib import Path
 
-def saveModList(list):
-    moddict = {}
-    for mod in list:
-        if mod.sayonika:
-            sayoid=mod.sayonikaid
-        else:
-            sayoid=None
-        moddict[mod.slug]={"name":mod.name,"sayonika":sayoid,"sayonikaVersion":mod.sayonikaVersion}
-    with open("modlist.json","w") as f:
-        json.dump(moddict, f)
-
-if not Path("modlist.json").exists():
-    saveModList([])
-
 class Mod:
     def __init__(self, slug, name, sayonika=False, sayonikaid="", sayonikaVersion=""):
         self.slug=slug
@@ -29,6 +15,8 @@ class Mod:
             return False
 
 def getModList():
+    if not Path("modlist.json").exists():
+        saveModList([])
     moddict=None
     modlist=[]
     with open("modlist.json") as f:
@@ -45,7 +33,7 @@ def getModBySlug(slug):
     with open("modlist.json") as f:
         moddict=json.load(f)
     details=moddict[slug]
-    if details["sayonika"]==None:
+    if details["sayonika"]==-1:
         return Mod(slug,details["name"],False)
     else:
         return Mod(slug,details["name"],True,details["sayonika"],details["sayonikaVersion"])
@@ -63,6 +51,17 @@ def removeMod(mod):
 def removeModBySlug(slug):
     mod = getModBySlug(slug)
     removeMod(mod)
+
+def saveModList(list):
+    moddict = {}
+    for mod in list:
+        if mod.sayonika:
+            sayoid=mod.sayonikaid
+        else:
+            sayoid=-1
+        moddict[mod.slug]={"name":mod.name,"sayonika":sayoid,"sayonikaVersion":mod.sayonikaVersion}
+    with open("modlist.json","w") as f:
+        json.dump(moddict, f)
 
 def modExists(slug):
     moddict=None
