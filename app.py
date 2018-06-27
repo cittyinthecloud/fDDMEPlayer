@@ -31,6 +31,7 @@ def main():
         shutil.move(str(Path.cwd()/"DDLC"),str(Path.cwd()/"mods"/"vanilla"))
         moddb.addMod(moddb.Mod("vanilla", "Doki Doki Literature Club"))
         logger.info("Setup complete!")
+
     logger.debug("Starting server")
     t = Thread(target=run_server)
     t.daemon = True
