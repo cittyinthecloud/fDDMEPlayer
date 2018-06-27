@@ -11,7 +11,7 @@ __pycache__/
 build/
 develop-eggs/
 dist/fDDMEPlayer
-dist/dist
+dist/bin
 downloads/
 eggs/
 .eggs/
