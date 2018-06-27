@@ -16,7 +16,7 @@ if not Path("modlist.json").exists():
     saveModList([])
 
 class Mod:
-    def __init__(self, slug, name, sayonika=False, sayonikaid="", sayonikaVersion=""):
+    def __init__(self, slug, name, sayonika=False, sayonikaid=None, sayonikaVersion=None):
         self.slug=slug
         self.name=name
         self.sayonika=sayonika
@@ -34,10 +34,10 @@ def getModList():
     with open("modlist.json") as f:
         moddict=json.load(f)
     for slug,details in moddict.items():
-        if details["sayonika"]==-1:
+        if details["sayonika"] is None:
             modlist.append(Mod(slug,details["name"],False))
         else:
-            modlist.append(Mod(slug,details["name"],True,details["sayonika"]))
+            modlist.append(Mod(slug,details["name"],True,details["sayonika"],details["sayonikaVersion"]))
     return modlist
 
 def getModBySlug(slug):
@@ -45,7 +45,7 @@ def getModBySlug(slug):
     with open("modlist.json") as f:
         moddict=json.load(f)
     details=moddict[slug]
-    if details["sayonika"]==None:
+    if details["sayonika"] is None:
         return Mod(slug,details["name"],False)
     else:
         return Mod(slug,details["name"],True,details["sayonika"],details["sayonikaVersion"])
