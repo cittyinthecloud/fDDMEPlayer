@@ -1,2 +1,1 @@
-bin\fDDMEPlayer
-pause
+start bin\fDDMEPlayer.exe

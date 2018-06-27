@@ -26,6 +26,8 @@ def main():
     if not moddb.modExists("vanilla"):
         if not (Path.cwd()/"DDLC").exists():
             print("Move the download of DDLC into fDDMEPlayer's folder, rename the folder to DDLC, and run setup again")
+            print("Press Enter to continue...")
+            input()
             sys.exit()
         os.makedirs(str(Path.cwd()/"mods"),exist_ok=True)
         shutil.move(str(Path.cwd()/"DDLC"),str(Path.cwd()/"mods"/"vanilla"))
