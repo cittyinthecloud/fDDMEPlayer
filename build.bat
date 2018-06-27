@@ -1,1 +1,2 @@
-pyinstaller --add-data templates;. --add-data static;. fDDMEPlayer.py
+pyinstaller --add-data templates;templates --add-data static;static ^
+            --add-binary distlibs;. --hidden-import=clr fDDMEPlayer.py
