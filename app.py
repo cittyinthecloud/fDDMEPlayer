@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 import os
 import shutil
-
+import common
 logger = logging.getLogger(__name__)
 
 
@@ -23,14 +23,13 @@ def url_ok(url, port):
         logger.exception("Server not started")
         return False
 
-if __name__ == '__main__':
+def main():
     if not moddb.modExists("vanilla"):
         if not (Path.cwd()/"DDLC").exists():
             print("Move the download of DDLC into fDDMEPlayer's folder, rename the folder to DDLC, and run setup again")
             sys.exit()
         os.makedirs(str(Path.cwd()/"mods"),exist_ok=True)
-        shutil.copytree(str(Path.cwd()/"DDLC"),str(Path.cwd()/"mods"/"vanilla"))
-        shutil.rmtree(str(Path.cwd()/"DDLC"))
+        common.moveTree(str(Path.cwd()/"DDLC"),str(Path.cwd()/"mods"/"vanilla"))
         moddb.addMod(moddb.Mod("vanilla", "Doki Doki Literature Club"))
         logger.info("Setup complete!")
     logger.debug("Starting server")
@@ -45,3 +44,6 @@ if __name__ == '__main__':
     logger.debug("Server started")
     webview.create_window("fDDMEPlayer",
                           "http://127.0.0.1:23948",min_size=(1280,720))
+
+if __name__ == '__main__':
+    main()
