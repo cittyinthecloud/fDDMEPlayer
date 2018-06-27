@@ -9,7 +9,6 @@ import sys
 from pathlib import Path
 import os
 import shutil
-import common
 logger = logging.getLogger(__name__)
 
 
@@ -29,7 +28,7 @@ def main():
             print("Move the download of DDLC into fDDMEPlayer's folder, rename the folder to DDLC, and run setup again")
             sys.exit()
         os.makedirs(str(Path.cwd()/"mods"),exist_ok=True)
-        common.moveTree(str(Path.cwd()/"DDLC"),str(Path.cwd()/"mods"/"vanilla"))
+        shutil.move(str(Path.cwd()/"DDLC"),str(Path.cwd()/"mods"/"vanilla"))
         moddb.addMod(moddb.Mod("vanilla", "Doki Doki Literature Club"))
         logger.info("Setup complete!")
     logger.debug("Starting server")
