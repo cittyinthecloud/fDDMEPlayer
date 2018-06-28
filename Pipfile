@@ -12,6 +12,7 @@ flask = "*"
 
 [dev-packages]
 pyinstaller = "*"
+"pypiwin32" = "*"
 
 [requires]
 python_version = "3.6"
