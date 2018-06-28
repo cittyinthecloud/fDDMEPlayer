@@ -2,34 +2,25 @@
 
 **[Download from releases here](https://github.com/famous1622/fDDMEPlayer/releases)**
 
-Downloading straight this repository will cause you to end up with a in-development version of the launcher, where bugs will be more likely to occur.
+Downloading straight this repository will likely cause you to end up with a
+in-development version of the launcher, where bugs will be more likely to occur.
 
-A mod launcher for DDLC.
+A mod launcher for DDLC on Windows.
 
-To run an install with Python prepackage (downloaded from releases)
--------------------------------------------------------------------
+Install a release version (you probably want this)
+--------------------------------------------------
 
-Place a copy of DDLC from a download from ddlc.moe[http://ddlc.moe/] into this app's folder, and rename it to DDLC
+Place a copy of ddlc-win.zip from [ddlc.moe](http://ddlc.moe/) into this app's folder.
 
-Then run setup.bat to setup the app
+Run fDDMEPlayer.bat to run the app.
 
-After running this app, you will need to open [http://localhost:5000](http://localhost:5000) in your browser to access the launcher.
+Build from source
+-----------------
 
+Building this app requires Windows 7+, Python 3.6+, and the pipenv package.
 
-To run an install without Python prepackaged
---------------------------------------------
-
-To run this you will need Python 3, which you can get from [https://www.python.org/](https://www.python.org/)
-
-Make sure you check the Add Python to PATH box on Windows
-
-![PATH](https://puu.sh/AhVzs/f3ccaf79d8.png)
-
-After that, place a copy of DDLC from a download from ddlc.moe[http://ddlc.moe/] into this app's folder, and rename it to DDLC
-
-Then run setup.bat to setup the app
-
-After running this app, you will need to open [http://localhost:5000](http://localhost:5000) in your browser to access the launcher.
+Run `pipenv install --dev` to get the build dependencies, followed by
+`pipenv run build` to build the application into the dist folder.
 
 Feature Requests / Bug Reports
 ------------------------------
