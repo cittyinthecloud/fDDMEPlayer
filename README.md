@@ -7,9 +7,6 @@ in-development version of the launcher, where bugs will be more likely to occur.
 
 A mod launcher for DDLC on Windows.
 
-Install a release version (you probably want this)
---------------------------------------------------
-
 Place a copy of ddlc-win.zip from [ddlc.moe](http://ddlc.moe/) into this app's folder.
 
 Run fDDMEPlayer.bat to run the app.
