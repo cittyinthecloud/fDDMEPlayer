@@ -9,10 +9,32 @@ from tarfile import TarFile
 import moddb
 from moddb import Mod
 import subprocess
+import requests
 
+VERSION_URL="https://raw.githubusercontent.com/famous1622/fDDMEPlayer/master/version"
+BANNEDMODS_URL="https://gist.githubusercontent.com/famous1622/705e4e8fb51c9206620c81801dd50a0e/raw/00a2edba955d05c710842a155c921145e88821d7/blacklisted.json"
 MODS_PATH = Path.cwd()/"mods"
 
 PATTERNS = ("options.rpyc","*.rpa","options.rpy")
+
+def checkVersion():
+    r = requests.get(VERSION_URL)
+    try:
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        logging.warning("Update check failed :( {0}".format(e))
+    else:
+        with open("version") as fp:
+            if fp.read() != r.text:
+                print("New version {0} available! Please download this from https://github.com/famous1622/fDDMEPlayer".format(r.text.strip()))
+
+def getBannedMods():
+    r = requests.get(BANNEDMODS_URL)
+    try:
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        logging.warning("Banned mods database access failed :( {0}".format(e))
+        return {}
 
 def launch_mod(slug):
     subprocess.Popen(str(MODS_PATH/slug/"DDLC.exe"))

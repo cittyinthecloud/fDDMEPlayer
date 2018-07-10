@@ -26,6 +26,7 @@ def url_ok(url, port):
         return False
 
 def main():
+    common.checkVersion()
     if not moddb.modExists("vanilla"):
         if not (Path.cwd()/"ddlc-win.zip").exists():
             print("Place a copy of ddlc-win.zip into this apps folder, then run it again to setup.")
