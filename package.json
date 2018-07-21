@@ -4,7 +4,10 @@
   "description": "A launcher for DDLC mods",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "make": "tsc && copyfiles -e \"**/*.ts\" -u 1 \"src/**/*\" dist/",
+    "dev": "npm run make && nw dist/",
+    "prod": "npm run make && nwbuild --platforms win32,win64,osx64,linux32,linux64 --buildDir build/ dist/"
   },
   "repository": {
     "type": "git",
@@ -33,6 +36,9 @@
     "@types/node": "^10.5.2",
     "@types/tar": "^4.0.0",
     "@types/tmp": "0.0.33",
+    "copyfiles": "^2.0.0",
+    "nw": "^0.18.2",
+    "nw-builder": "^3.1.2",
     "tslint": "^5.11.0",
     "typescript": "^2.9.2"
   }
