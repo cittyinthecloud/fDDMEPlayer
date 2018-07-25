@@ -1,0 +1,13 @@
+.addmodcontainer {
+  margin: 10px;
+}
+
+mat-card {
+  padding:20px;
+  padding-top: 30px;
+  width: calc(100%-10px);
+}
+
+mat-form-field {
+  width: 100%;
+}

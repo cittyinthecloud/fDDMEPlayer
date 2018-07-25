@@ -1,0 +1,14 @@
+.launchbutton {
+  margin-left: 10px;
+  width: 100%;
+}
+
+.modslug{
+  font-size: 60%;
+  vertical-align: !important bottom;
+}
+
+mat-card {
+  width:100%;
+  margin: 10px;
+}

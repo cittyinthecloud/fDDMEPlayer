@@ -1,0 +1,28 @@
+<!-- <mat-list>
+  <mat-list-item *ngFor="let mod of mods">
+    <span>{{mod.name}}</span><sub>{{mod.slug}}</sub><button mat-raised-button class="launchbutton" color="primary">Launch {{mod.name}}</button>
+  </mat-list-item>
+</mat-list> -->
+
+<!-- <mat-list>
+  <mat-list-item *ngFor="let mod of mods">
+    <button  mat-raised-button class="launchbutton" color="primary">
+      Launch <span class="modname">{{mod.name}}<sub class="modslug">{{mod.slug}}</sub></span>
+    </button>
+  </mat-list-item>
+</mat-list> -->
+<mat-grid-list cols=2 rowHeight="200px">
+  <mat-grid-tile *ngFor="let mod of mods">
+    <mat-card>
+      <mat-card-title>{{mod.name}}</mat-card-title>
+      <mat-card-subtitle>{{mod.slug}}</mat-card-subtitle>
+      <mat-card-actions>
+        <button mat-raised-button class="launchbutton" color="primary"
+         (click)="startLaunch(mod)">Launch</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+<!-- <p>
+  modlist works!
+</p> -->

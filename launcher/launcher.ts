@@ -1,6 +1,6 @@
-import { modsFolder, patterns, vanillaPath } from "./constants";
+import { modsFolder, patterns, vanillaPath } from "../src/common/constants";
 import * as moddb from "./moddb";
-import { Mod } from "./types";
+import { Mod } from "../src/common/types";
 
 import * as ADMZip from "adm-zip";
 import { spawn } from "child_process";
@@ -11,10 +11,10 @@ import { basename, dirname, extname, join, relative } from "path";
 import * as tar from "tar";
 import * as tmp from "tmp";
 
-
 export async function launchMod(mod: Mod) {
     const executableName = join(modsFolder, mod.slug, "DDLC.exe");
     const subprocess = spawn(executableName, [], {
+        cwd: join(modsFolder, mod.slug),
         detached: true,
         stdio: "ignore",
     });
@@ -35,9 +35,7 @@ export async function installMod(slug: string, name: string, path: string) {
     } else {
         throw new Error("InvalidModExt");
     }
-
-    const mod = new Mod(slug, name);
-    moddb.addMod(mod);
+    moddb.addMod(new Mod(slug, name));
 }
 
 async function installZipMod(modFolder: string, path: string) {
@@ -75,7 +73,7 @@ async function mergeInto(into: string, from: string) {
 
 function findGameFolder(path: string) {
     const items = klaw(path);
-    let gamePath: string = null;
+    var gamePath: string = "";
     const foundMatching = items.some((item) => {
         const itemname = basename(item.path);
         const isLandmark = patterns.some((pattern) => minimatch(itemname, pattern));

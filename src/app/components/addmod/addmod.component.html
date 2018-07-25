@@ -1,0 +1,15 @@
+<div class="addmodcontainer">
+  <mat-card>
+    <mat-card-title>Add Mod</mat-card-title>
+    <form>
+      <mat-form-field>
+        <input matInput placeholder="Name">
+      </mat-form-field>
+      <button (click)="fileInput.click()">
+        <mat-icon>library_add</mat-icon>
+        <span>Select</span>
+        <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
+      </button>
+    </form>
+  </mat-card>
+</div>

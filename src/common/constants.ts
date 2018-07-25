@@ -1,7 +1,7 @@
 import { join, resolve } from "path";
-import { cwd } from "process";
+import { path as appRoot } from "app-root-path";
 
-export const dataFolder = resolve(join(cwd(), "data"));
+export const dataFolder = resolve(join(appRoot, "data"));
 
 export const modsFolder = join(dataFolder, "mods");
 

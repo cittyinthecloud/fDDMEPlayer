@@ -1,9 +1,0 @@
-{
-  "name":"fDDMEPlayer",
-  "main":"views/main.html",
-  "window":{
-    "min_width":1280,
-    "min_height":720,
-    "icon":"assets/icon.png"
-  }
-}
