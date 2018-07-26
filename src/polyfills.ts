@@ -50,7 +50,7 @@ import 'core-js/es7/reflect';
  * Required to support Web Animations `@angular/platform-browser/animations`.
  * Needed for: All but Chrome, Firefox and Opera. http://caniuse.com/#feat=web-animation
  **/
-// import 'web-animations-js';  // Run `npm install --save web-animations-js`.
+import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
@@ -77,7 +77,7 @@ import 'zone.js/dist/zone-mix';  // Included with Angular CLI.
  * (Such as dialog/shortcut/menu/getFileIcon/shell/session/
  * desktopCapturer/onEvent) in ngZone
  */
-// import 'zone.js/dist/zone-patch-electron'; // add zone-patch-electron to patch Electron native API
+import 'zone.js/dist/zone-patch-electron'; // add zone-patch-electron to patch Electron native API
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
