@@ -1,12 +1,13 @@
-import { join, resolve } from "path";
-import { path as appRoot } from "app-root-path";
+import * as Store from "electron-store";
+import { ElectronService } from "../app/providers/electron.service";
 
-export const dataFolder = resolve(join(appRoot, "data"));
+let persistent;
 
-export const modsFolder = join(dataFolder, "mods");
-
-export const vanillaPath = join(modsFolder, "vanilla");
-
-export const sultanCompiledModsPath = join(modsFolder, ".sultanCompiled");
-
-export const patterns = ["options.rpyc", "*.rpa", "options.rpy"];
+export function getPersistent(electron: ElectronService){
+  return persistent || (persistent = new Store({
+    defaults: {
+      "vanillaInstalled": false
+    },
+    cwd: electron.remote.app.getPath("userData")
+  }))
+}

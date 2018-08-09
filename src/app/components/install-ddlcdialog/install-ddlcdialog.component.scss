@@ -1,0 +1,52 @@
+// mat-dialog-content {
+//   margin-bottom: 1em;
+// }
+
+mat-icon{
+  margin-right: 5px;
+}
+
+mat-dialog-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  button {
+    flex:50%;
+    padding-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.error{
+  margin-top: 1em;
+  color: desaturate(red, 20%);
+}
+
+.installing {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+
+  mat-dialog-content{
+    margin: 0 -25px;
+    overflow: hidden;
+    height: 100%;
+
+    mat-spinner{
+      left: 45px;
+      top: 20px;
+      display: inline-block;
+      z-index: 3;
+    }
+
+    h2 {
+      text-align: center;
+      z-index: 2;
+      position: relative;
+      bottom: -35px;
+      width: 100%;
+    }
+  }
+}

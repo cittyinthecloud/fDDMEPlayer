@@ -1,9 +1,10 @@
-import { app, BrowserWindow, screen, ipcMain } from 'electron';
+import { app, BrowserWindow, screen, ipcMain, shell } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import { launchMod } from './launcher/launcher';
 import { path as appRoot } from "app-root-path"
 import * as moddb from './launcher/moddb'
+import { installDDLC } from './launcher/install';
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -84,6 +85,17 @@ try {
     (async () => {
       event.sender.send("modlist", await moddb.getMods())
     })();
+  })
+
+  ipcMain.on("openExternal",(event, url) => {
+      shell.openExternal(url)
+  })
+
+  ipcMain.on("installDDLC",(event, path) => {
+      (async ()=>{
+          await installDDLC(path);
+          event.sender.send("DDLCInstalled")
+      })()
   })
 } catch (e) {
   // throw e;

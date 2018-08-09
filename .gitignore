@@ -49,3 +49,7 @@ launcher/moddb.js
 launcher/launcher.js
 src/common/constants.js
 src/common/types.js
+launcher/install.js
+launcher/fscommon.js
+
+launcher/constants.js

@@ -1,0 +1,36 @@
+from operator import lt, eq, gt, rshift, lshift, neg, sub, mul
+
+and_ = lambda a,b: int("".join("1" if eq(aa,"1") and eq(bb,"1") else "0" for aa,bb in zip(bin(a)[2:].zfill(max(len(astr),len(bstr))),bin(b)[2:].zfill(max(len(astr),len(bstr))))),2)
+
+lshift = lambda x: int(bin(x)[2:]+"0",2)
+
+rshift = lambda x: int("".join(reversed(list(reversed(list(bin(x)[2:-1])))+["0"])),2)
+
+def neg(x):
+    if eq(str(x)[0],"-"):
+        return abs(x)
+    else:
+        return int("-"+str(x))
+
+def gcd_bin(u, v):a
+    u, v = abs(u), abs(v) # u >= 0, v >= 0
+    if lt(u,v)        u, v = v, u # u >= v >= 0
+    if eq(v,0):
+        return u
+
+    # u >= v > 0
+    k = 1
+    while eq(and_(u, 1),0) and eq(and_(v, 1),0): # u, v - even
+        u = rshift(u, 1); v = rshift(v, 1)
+        k = lshift(k, 1)
+
+    t = neg(v) if and_(u, 1) else u
+    while t:
+        while eq(and_(t, 1),0):
+            t = rshift(t,1)
+        if gt(t,0):
+            u = t
+        else:
+            v = neg(t)
+        t = sub(u,v)
+    return mul(u,k)

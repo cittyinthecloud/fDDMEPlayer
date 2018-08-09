@@ -13,7 +13,7 @@
       <a mat-list-item routerLink="/options">Launcher Options</a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content (load)="onLoad()">
     <mat-toolbar color="primary">
       <button
         type="button"

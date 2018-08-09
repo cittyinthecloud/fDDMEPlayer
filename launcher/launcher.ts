@@ -1,6 +1,7 @@
-import { modsFolder, patterns, vanillaPath } from "../src/common/constants";
+import { modsFolder, patterns, vanillaPath } from "./constants";
 import * as moddb from "./moddb";
 import { Mod } from "../src/common/types";
+import { mergeInto } from "./fscommon"
 
 import * as ADMZip from "adm-zip";
 import { spawn } from "child_process";
@@ -10,18 +11,20 @@ import * as minimatch from "minimatch";
 import { basename, dirname, extname, join, relative } from "path";
 import * as tar from "tar";
 import * as tmp from "tmp";
+import { slug as slugify } from "slug";
 
 export async function launchMod(mod: Mod) {
-    const executableName = join(modsFolder, mod.slug, "DDLC.exe");
+    const executableName = join(modsFolder, slugify(mod.title), "DDLC.exe");
     const subprocess = spawn(executableName, [], {
-        cwd: join(modsFolder, mod.slug),
+        cwd: join(modsFolder, slugify(mod.title)),
         detached: true,
         stdio: "ignore",
     });
     subprocess.unref();
 }
 
-export async function installMod(slug: string, name: string, path: string) {
+export async function installMod(mod: Mod, path: string) {
+    const slug = slugify(mod.title)
     const newModFolder = join(modsFolder, slug);
     await fs.mkdirs(newModFolder);
     await fs.copy(vanillaPath, newModFolder);
@@ -35,7 +38,7 @@ export async function installMod(slug: string, name: string, path: string) {
     } else {
         throw new Error("InvalidModExt");
     }
-    moddb.addMod(new Mod(slug, name));
+    moddb.addMod(mod);
 }
 
 async function installZipMod(modFolder: string, path: string) {
@@ -60,15 +63,6 @@ async function installTarballMod(modFolder: string, path: string) {
 
 async function installRpaMod(modFolder: string, path: string) {
     await fs.move(path, join(modFolder, "game", basename(path)));
-}
-
-async function mergeInto(into: string, from: string) {
-    const promises = klaw(from).map((x) => {
-        const src = x.path;
-        const dst = join(into, relative(from, src));
-        return fs.move(src, dst, {overwrite: true});
-    });
-    await Promise.all(promises);
 }
 
 function findGameFolder(path: string) {

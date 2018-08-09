@@ -4,7 +4,7 @@
   "description": "A launcher for DDLC mods",
   "homepage": "https://github.com/famous1622/fDDMEPlayer",
   "author": {
-    "name": "famous1622",
+    "name": "famous1622"
   },
   "main": "main.js",
   "private": true,
@@ -19,7 +19,7 @@
     "build:prod": "npm run build -- -c production",
     "ng:serve": "ng serve",
     "ng:serve:web": "npm run postinstall:web && ng serve -o",
-    "electron:tsc": "tsc main.ts --target es5 --moduleResolution node --lib DOM,ES5,ScriptHost,ES2015.Promise",
+    "electron:tsc": "tsc main.ts --allowSyntheticDefaultImports --target es5 --moduleResolution node --lib DOM,ES5,ScriptHost,ES2015.Promise",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:tsc && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
     "electron:linux": "npm run build:prod && npx electron-builder build --linux",
@@ -32,12 +32,19 @@
     "@angular/animations": "^6.1.0",
     "@angular/cdk": "^6.4.1",
     "@angular/material": "^6.4.1",
+    "@types/adm-zip": "^0.4.31",
+    "@types/crc": "^3.4.0",
     "adm-zip": "^0.4.11",
     "app-root-path": "^2.1.0",
-    "klaw-sync": "^4.0.0"
+    "crc": "^3.8.0",
+    "electron-store": "^2.0.0",
+    "klaw-sync": "^4.0.0",
+    "slug": "^0.9.1",
+    "web-animations-js": "^2.3.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.8",
+    "@angular-devkit/build-optimizer": "^0.7.1",
     "@angular/cli": "6.0.8",
     "@angular/common": "6.1.0",
     "@angular/compiler": "6.1.0",

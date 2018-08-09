@@ -5,9 +5,10 @@
       <mat-form-field>
         <input matInput placeholder="Name">
       </mat-form-field>
-      <button (click)="fileInput.click()">
+      <button class="fileInputButton" mat-raised-button (click)="fileInput.click()">
         <mat-icon>library_add</mat-icon>
-        <span>Select</span>
+        <span *ngIf="!fileSelected">Select file</span>
+        <span *ngIf="fileSelected">{{selectedPath}}</span>
         <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
       </button>
     </form>

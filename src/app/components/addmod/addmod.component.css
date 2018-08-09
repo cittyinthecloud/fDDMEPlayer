@@ -8,6 +8,9 @@ mat-card {
   width: calc(100%-10px);
 }
 
-mat-form-field {
+mat-icon{
+  margin-right: 5px
+}
+mat-form-field, .fileInputButton {
   width: 100%;
 }

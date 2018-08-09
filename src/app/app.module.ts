@@ -33,8 +33,11 @@ import {
   MatSnackBarModule,
   MatFormFieldModule,
   MatInputModule,
+  MatDialogModule,
+  MatProgressSpinnerModule,
 } from '@angular/material';
 import { AddmodComponent } from './components/addmod/addmod.component';
+import { InstallDDLCDialogComponent } from './components/install-ddlcdialog/install-ddlcdialog.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,7 @@ import { AddmodComponent } from './components/addmod/addmod.component';
     ModlistComponent,
     WebviewDirective,
     AddmodComponent,
+    InstallDDLCDialogComponent,
   ],
   imports: [
     MatToolbarModule,
@@ -56,6 +60,8 @@ import { AddmodComponent } from './components/addmod/addmod.component';
     MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
@@ -63,6 +69,7 @@ import { AddmodComponent } from './components/addmod/addmod.component';
     AppRoutingModule,
     LayoutModule,
   ],
+  entryComponents:[InstallDDLCDialogComponent],
   providers: [ElectronService],
   bootstrap: [AppComponent]
 })

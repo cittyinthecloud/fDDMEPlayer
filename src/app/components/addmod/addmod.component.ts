@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddmodComponent implements OnInit {
 
-  constructor() { }
+  fileSelected: boolean;
+  selectedPath: string;
+  constructor() {
+    this.fileSelected = false;
+  }
 
   ngOnInit() {
+  }
+
+  onFileInput(event) {
+    this.fileSelected = true;
+    console.log(event)
+    this.selectedPath = event.srcElement.files[0].path
   }
 
 }

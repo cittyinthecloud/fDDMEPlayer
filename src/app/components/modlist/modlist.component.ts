@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { ModsService } from '../../mods.service';
 import { Mod } from '../../../common/types';
 import { ElectronService } from '../../providers/electron.service';
+import slug from "slug"
 
 @Component({
   selector: 'app-modlist',
@@ -16,7 +17,7 @@ export class ModlistComponent implements OnInit {
 
   constructor(private modsservice: ModsService,
               private electron: ElectronService,
-              public snackbar: MatSnackBar) { }
+              public snackbar: MatSnackBar) {}
 
   getMods(): void {
     this.modsservice.getMods(this.electron.ipcRenderer)
@@ -39,6 +40,11 @@ export class ModlistComponent implements OnInit {
   }
 
   startLaunch(mod: Mod) {
-    this.electron.ipcRenderer.send("launch", mod)
+    this.electron.ipcRenderer.send("launch", mod);
   }
+
+  slugify(input: string): string {
+    return slug(input);
+  }
+
 }

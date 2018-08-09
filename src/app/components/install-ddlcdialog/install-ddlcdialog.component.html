@@ -1,0 +1,27 @@
+<div class="installPrompt" *ngIf="!installing">
+    <h2 mat-dialog-title>Install DDLC</h2>
+    <mat-dialog-content>
+      fDDMEPlayer requires a copy of DDLC to use when installing mods. Please
+      download the Windows version of DDLC from <a href="#" (click)="openBrowser($event,'https://ddlc.moe/')">ddlc.moe</a>,
+      then select the downloaded file here.
+      <div class="error" *ngIf="DDLCChecked && !isValidDDLC">
+          This file is not a valid copy of ddlc-win.zip. Please redownload and try again.
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button class="ddlcfileInputButton" mat-raised-button (click)="fileInput.click()">
+            <mat-icon>library_add</mat-icon>
+            <span *ngIf="!fileSelected">Select file</span>
+            <span *ngIf="fileSelected">{{selectedPath}}</span>
+            <input #fileInput type="file" accept="application/x-zip-compressed" (change)="onFileInput($event)" style="display:none;" />
+        </button>
+        <button color=primary [disabled]="!fileSelected || !isValidDDLC || !DDLCChecked"
+         mat-raised-button (click)="okayClick()">OK</button>
+    </mat-dialog-actions>
+</div>
+<div class="installing" *ngIf="installing">
+    <mat-dialog-content>
+        <mat-spinner></mat-spinner>
+        <h2>Installing DDLC...</h2>
+    </mat-dialog-content>
+</div>
