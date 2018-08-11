@@ -11,7 +11,7 @@ import * as minimatch from "minimatch";
 import { basename, dirname, extname, join, relative } from "path";
 import * as tar from "tar";
 import * as tmp from "tmp";
-import { slug as slugify } from "slug";
+import * as slugify from "slug";
 
 export async function launchMod(mod: Mod) {
     const executableName = join(modsFolder, slugify(mod.title), "DDLC.exe");

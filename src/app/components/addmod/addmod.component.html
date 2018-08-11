@@ -1,9 +1,12 @@
 <div class="addmodcontainer">
   <mat-card>
     <mat-card-title>Add Mod</mat-card-title>
-    <form>
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
       <mat-form-field>
-        <input matInput placeholder="Name">
+        <input matInput name="title" required minlength="1" [(ngModel)]="model.title" placeholder=Title #title="ngModel">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput  [(ngModel)]="model.author" placeholder="Author (optional)">
       </mat-form-field>
       <button class="fileInputButton" mat-raised-button (click)="fileInput.click()">
         <mat-icon>library_add</mat-icon>
@@ -11,6 +14,7 @@
         <span *ngIf="fileSelected">{{selectedPath}}</span>
         <input #fileInput type="file" (change)="onFileInput($event)" style="display:none;" />
       </button>
+      <button mat-raised-button [disabled]="title.invalid || !(title.dirty || title.touched) || !fileSelected" type=submit color=primary class="submitButton">Submit</button>
     </form>
   </mat-card>
 </div>

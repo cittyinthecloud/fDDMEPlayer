@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { ModsService } from '../../mods.service';
 import { Mod } from '../../../common/types';
 import { ElectronService } from '../../providers/electron.service';
-import slug from "slug"
+import * as slug from "slug"
 
 @Component({
   selector: 'app-modlist',
@@ -30,7 +30,7 @@ export class ModlistComponent implements OnInit {
     this.electron.ipcRenderer.on("launchReply", (e, state)=> {
       console.log("launchReply: "+JSON.stringify(state));
       if(state["success"]){
-        this.snackbar.open("Launched "+state["mod"].name,"Dismiss",{
+        this.snackbar.open("Launched "+state["mod"].title,"Dismiss",{
           duration: 3000
         })
       } else {
@@ -41,6 +41,7 @@ export class ModlistComponent implements OnInit {
 
   startLaunch(mod: Mod) {
     this.electron.ipcRenderer.send("launch", mod);
+
   }
 
   slugify(input: string): string {

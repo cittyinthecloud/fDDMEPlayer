@@ -6,20 +6,21 @@ export class Mod {
     constructor(title: string, author?: string, releaseDate?: Date) {
         this.title = title;
 
-        if (author){
+        if (author !== undefined){
           this.author = author;
         } else {
           this.author = "No author set.";
         }
 
         if (releaseDate) {
+            if (!(releaseDate instanceof Date)) {
+                throw new Error('Date is not a valid Date Object');
+            }
             this.releaseDate = releaseDate;
         } else {
             this.releaseDate = null;
         }
 
-        if (!(releaseDate instanceof Date)) {
-            throw new Error('Date is not a valid Date Object');
-        }
+
     }
 }

@@ -11,6 +11,11 @@ mat-card {
 mat-icon{
   margin-right: 5px
 }
-mat-form-field, .fileInputButton {
+mat-form-field, button {
   width: 100%;
+}
+
+button {
+  margin-top: 10px;
+  /* margin-bottom: 10px */
 }

@@ -1,10 +1,11 @@
-import { app, BrowserWindow, screen, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, screen, ipcMain, shell, App } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import { launchMod } from './launcher/launcher';
+import { launchMod, installMod } from './launcher/launcher';
 import { path as appRoot } from "app-root-path"
 import * as moddb from './launcher/moddb'
 import { installDDLC } from './launcher/install';
+import * as Store from "electron-store";
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -44,6 +45,17 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
+}
+
+let persistent: Store;
+
+function getPersistent(app: App): Store {
+  return persistent || (persistent = new Store({
+    defaults: {
+      "vanillaInstalled": false
+    },
+    cwd: app.getPath("userData")
+  }))
 }
 
 try {
@@ -92,11 +104,15 @@ try {
   })
 
   ipcMain.on("installDDLC",(event, path) => {
-      (async ()=>{
-          await installDDLC(path);
-          event.sender.send("DDLCInstalled")
-      })()
+    installDDLC(path).then(()=>{
+      event.sender.send("DDLCInstalled")
+      getPersistent(app).set({
+        "vanillaInstalled": true,
+      })
+    })
   })
+
+  ipcMain.on("installMod",(event, args) => installMod(args.mod, args.path).then(() => event.sender.send("ModInstalled")))
 } catch (e) {
   // throw e;
 }
