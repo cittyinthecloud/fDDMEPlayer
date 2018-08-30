@@ -1,4 +1,0 @@
-appjar
-flask
-python-slugify
-requests
